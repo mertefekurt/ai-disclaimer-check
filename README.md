@@ -1,48 +1,46 @@
-# ai-disclaimer-check
+# AI Disclaimer Check
 
-> Lint AI-generated content templates for disclosure and unsupported-claim gaps.
+<p align="center">
+  <img src="assets/readme-cover.svg" alt="AI Disclaimer Check cover" width="100%" />
+</p>
 
-## CLI contract Overview
+![stack](https://img.shields.io/badge/stack-Python-4b5563?style=flat-square) ![python](https://img.shields.io/badge/python-3.11-2563eb?style=flat-square) ![license](https://img.shields.io/badge/license-MIT-16a34a?style=flat-square) ![ci](https://img.shields.io/badge/ci-GitHub%20Actions-dc2626?style=flat-square)
 
-Lint AI-generated content templates for disclosure and unsupported-claim gaps. It solves review drift by turning plain-text plans into deterministic CI-friendly findings.
+Lint machine-written content templates for disclosure and unsupported-claim gaps.
 
-## Input Contract
+## The short version
 
-Accepts AI content template. The reader supports plain text, JSON, JSONL, and CSV so the
-tool can fit into scripts, CI jobs, and review exports.
+`ai-disclaimer-check` is intentionally small: feed it a file, get deterministic findings, and decide whether the result should block a merge or just guide cleanup.
 
-## CLI Walkthrough
+## Rule surface
+
+| Rule | Severity | What it catches |
+| --- | --- | --- |
+| `missing-disclaimer` | high | AI disclosure missing |
+| `medical-advice` | medium | medical advice phrase detected |
+| `guarantee-claim` | low | guarantee language detected |
+
+## Usage
 
 ```bash
 python -m pip install -e ".[dev]"
 ai-disclaimer-check examples/sample.txt
 ai-disclaimer-check examples/sample.txt --json --fail-on medium
-python -m ai_disclaimer_check --help
 ```
 
-## Rule Surface
+## Useful defaults
 
-| Rule | Severity | Meaning |
-|---|---:|---|
-| `missing-disclaimer` | high | AI disclosure missing |
-| `medical-advice` | medium | medical advice phrase detected |
-| `guarantee-claim` | low | guarantee language detected |
+| Option | Reason |
+| --- | --- |
+| `--json` | machine-readable output for scripts |
+| `--fail-on medium` | stricter CI gate when warnings matter |
+| `--format auto` | let the reader detect text, CSV, JSON, or JSONL |
 
-## Validation Notes
+## Local checks
 
 ```bash
+python -m pip install -e ".[dev]"
 ruff check .
 pytest
 python -m ai_disclaimer_check --help
 ```
-
-Example risky input:
-
-```text
-generated answer disclaimer missing medical advice guaranteed
-```
-
-Architecture: `cli.py` handles arguments, `core.py` reads and evaluates records, and
-`rules.py` keeps the project-specific policy explicit.
-
-License: MIT.
