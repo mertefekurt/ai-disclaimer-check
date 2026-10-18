@@ -1,20 +1,21 @@
 # AI Disclaimer Check
 
-Lint machine-written content templates for disclosure and unsupported-claim gaps.
-
 ![AI Disclaimer Check cover](assets/readme-cover.svg)
 
-## Policy flow
+Lint AI-generated content templates for disclosure and unsupported-claim gaps.
 
-![Workflow diagram](assets/readme-diagram.svg)
+`Python`
 
-## Checks in plain language
+## Start here
 
-- `missing-disclaimer` - AI disclosure missing (high); add appropriate disclosure.
-- `medical-advice` - medical advice phrase detected (medium); route to safe domain policy.
-- `guarantee-claim` - guarantee language detected (low); soften unsupported guarantees.
+```bash
+git clone https://github.com/mertefekurt/ai-disclaimer-check.git
+cd ai-disclaimer-check
+python -m pip install -e ".[dev]"
+ai-disclaimer-check examples/sample.txt
+```
 
-## Files to open first
+## Project map
 
 ```text
 .github/        CI workflow
@@ -23,11 +24,8 @@ src/            package source
 tests/          test coverage
 ```
 
-## One-pass run
+## Repository
 
-```bash
-git clone https://github.com/mertefekurt/ai-disclaimer-check.git
-cd ai-disclaimer-check
-python -m pip install -e ".[dev]"
-ai-disclaimer-check examples/sample.txt
-```
+[Open the source on GitHub →](https://github.com/mertefekurt/ai-disclaimer-check)
+
+[MIT License](LICENSE)
